@@ -25,6 +25,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		<?php echo $cakeDescription ?>:
 		<?php echo $this->fetch('title'); ?>
 	</title>
+
 	<?php
 		echo $this->Html->meta('icon');
 
@@ -33,6 +34,9 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
 		echo $this->fetch('script');
+
+		//Add script elements with references to all root js files (automatically adds .js after the name)
+		echo $this->Html->script(array('react.production.min', 'react-dom.production.min', 'babel-standalone.min'));
 	?>
 </head>
 <body>
