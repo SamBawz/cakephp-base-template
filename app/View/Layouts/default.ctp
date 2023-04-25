@@ -26,6 +26,10 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		<?php echo $this->fetch('title'); ?>
 	</title>
 
+	<!-- development versie voor trouble shooting -->
+	<script src="https://unpkg.com/react@18.2.0/umd/react.development.js" crossorigin></script>
+	<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+
 	<?php
 		echo $this->Html->meta('icon');
 
@@ -36,7 +40,10 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		echo $this->fetch('script');
 
 		//Add script elements with references to all root js files (automatically adds .js after the name)
-		echo $this->Html->script(array('react.production.min', 'react-dom.production.min', 'babel-standalone.min'));
+		//echo $this->Html->script(array('react.production.min', 'react-dom.production.min', 'babel-standalone.min'));
+
+	//Alleen babel voor troubleshooting
+	echo $this->Html->script(array('babel-standalone.min'));
 	?>
 </head>
 <body>
