@@ -28,6 +28,33 @@ body {
 	font-size:90%;
 	margin: 0;
 }
+.content {
+	height: 80vh;
+	max-width: 30%;
+	flex-direction: column;
+	flex-wrap: wrap;
+	display: flex;
+}
+.content * {
+	margin-right: 3rem;
+	margin-top: 2rem;
+	border: rgba(0,0,0,0.1) dashed;
+	padding: 1rem;
+
+}
+.testClass {
+	background-color: red !important;
+}
+.clickButton {
+	min-width: 5rem !important;
+	padding: 1rem;
+	color: white;
+	margin-bottom: 1rem;
+	border-radius: 1rem;
+}
+hr {
+	margin: 1rem 0 1rem 0 !important;
+}
 a {
 	color: #003d4c;
 	text-decoration: underline;
