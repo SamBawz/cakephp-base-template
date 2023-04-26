@@ -13,7 +13,7 @@
 	<title-container>
 		<h1>Here's another title slot. It's easy to duplicate components with Minze</h1>
 	</title-container>
-	<table-element rows="[['head1', 'head2', 'head3'],['r1c1', 'r1c2', 'r1c3'],['r2c1', 'r2c2', 'r2c3']]"></table-element>
+	<table-element rows='[["head1", "head2", "head3"], ["r1c1", "r1c2", "r1c3"], ["r2c1", "r2c2", "r2c3"]]'></table-element>
 </div>
 
 <!--
@@ -37,7 +37,7 @@ Deze methode mogelijk gebruiken om elementen te grouperen? Form components, tabl
 <script type="module">
 	(class MyElement extends MinzeElement {
 		html = () => `
-		<section>Hello Minze!</section>
+		<section>This component was made in the HTML file!</section>
 		`
 	}.define())
 </script>

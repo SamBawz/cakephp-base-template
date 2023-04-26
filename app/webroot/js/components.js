@@ -24,27 +24,65 @@ export class ReactiveAttribute extends MinzeElement {
 }
 
 export class ButtonCounter extends MinzeElement {
-	//Properties kunnen reactief ingesteld worden of normaal
+	//Properties kunnen reactief ingesteld worden of normaal (reactief forceert een rerender op veranderingen)
 	//Normaal:
-	myColor = "green";
+	normaal = "normaal";
 	//Reactief:
 	reactive = [
-		['myCount', 0]
+		['myCount', 0],
+		['isGreen', true]
 	]
 
 	html = () => `
-		<button class="counterClick">${this.myCount}</button>
+		<button class="counterClick" style="background-color: ${this.isGreen ? 'green' : 'red'}">${this.myCount}</button>
+		<button-child count="${this.myCount}"></button-child>
+	`
+
+	css = () => `
+	.counterClick {
+		min-width: 5rem;
+		padding: 1rem;
+		color: white;
+		margin-bottom: 1rem;
+		border-radius: 1rem;
+	}
 	`
 
 	//Functies
 	increaseCount = () => {
 		this.myCount += 1
+		this.isGreen = !this.isGreen;
 	}
 
 	//EventListeners worden aan classes toegekend
 	eventListeners = [
 		['.counterClick', 'click', this.increaseCount]
 	]
+}
+
+export class ButtonChild extends MinzeElement {
+	attrs = [
+		['count', 0]
+	]
+	static observedAttributes = ['count']
+
+	html = () => `
+	<p>I'm the buttons child but I know you clicked on my parent ${this.count} times!</p>
+	<p class="reset" style="font-weight: bold; cursor:pointer;">Let me reset my parents count</p>
+	`
+
+	eventListeners = [
+		['.reset', 'click', this.resetCount]
+	]
+
+	resetCount() {
+		//this.cast('minze:reset')
+		this.count = 0;
+	}
+
+	onAttributeChange() {
+		//console.log(this.count) // whatever the new attribute value is
+	}
 }
 
 export class MinzeCounting extends MinzeElement {
@@ -103,72 +141,54 @@ export class CommentElement extends MinzeElement {
 	`
 }
 
-/*
-<table>
-	<thead>
-	<tr>
-		{
-			rows[0].map((row, index) => (
-				//About keys: https://legacy.reactjs.org/docs/lists-and-keys.html
-				<th key={index}>{ row }</th>
-			))
-		}
-	</tr>
-	</thead>
-	<tbody>
-	{
-		rows.map((row, index) => (
-			//JS expressions https://legacy.reactjs.org/docs/conditional-rendering.html
-			index > 0 &&
-			<tr key={index}>
-				{
-					row.map((content, index) => (
-						<td key={index}>{ content }</td>
-					))
-				}
-			</tr>
-		))
-	}
-	</tbody>
-</table>
-
-${this.isVisible ? '<div>Hello Minze!</div>' : ''}
-    ${this.whenVisible()}
- */
-
 export class TableElement extends MinzeElement {
+	//This attribute is not an array yet
 	attrs = [
-		['rows', [['h1', 'h2'], ['c1', 'c2']]]
+		'rows'
 	]
 
+	//The property that will be mapped needs to be defined as an array
+	//Fill the property with the attributes content before the component gets rendered through the onReactive hook
+	rowsArray = [];
+
+	//If a ternary operator is not sufficient, we can insert a function in the HTML instead
 	whenNotFirst = (row, index) => {
 		if (index > 0) {
 			return `
 			<tr>
-				${row.map((content) => `<td>${content}</td>`)}
+				${row.map((content) => `<td>${content}</td>`).join('')}
 			</tr>`
 		} else return '';
 	}
 
 	html = () => `
+	<link rel="stylesheet" href="../css/cake.generic.css">
 	<table>
 		<thead>
 			<tr>
-				${this.rows[0].map((row) => `
+				${this.rowsArray[0].map((row) => `
 					<th>${row}</th>
 				`).join('')}
 			</tr>
 		</thead>
 		<tbody>
-			${this.rows.map((row, index) => `
+			${this.rowsArray.map((row, index) => `
 				${this.whenNotFirst(row, index)}
 			`).join('')}
 		</tbody>
 	</table>
 	`
-	onReady() {
-		console.log(this.rows)
+
+	//Before the component renders, fill this property with the content of the attribute and make it an array
+	onReactive() {
+		if(this.rows.length > 0) {
+			this.rowsArray = JSON.parse(this.rows)
+		} else {
+			this.rowsArray = [[]]
+		}
 	}
+
+	//TO MAKE THIS COMPONENTS ATTRIBUTE REACTIVE; set a watcher on the attribute, make the property reactive and then add a watcher event that changes the property
 }
 
 
