@@ -14,3 +14,17 @@ export class TitleContainer extends MinzeElement {
 	}
 	`
 }
+
+export class FormContainer extends MinzeElement {
+	html = () => `
+	<div class="form-container">
+		<p class="testClass">This is inside a component</p>
+		<slot></slot>
+	</div>
+	`
+	css = () => `
+	.form-container {
+	background-color: rgba(0,0,0,0.1);
+	}
+	`
+}
