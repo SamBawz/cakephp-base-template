@@ -35,7 +35,7 @@ body {
 	flex-wrap: wrap;
 	display: flex;
 }
-.content * {
+.content > * {
 	margin-right: 3rem;
 	margin-top: 2rem;
 	border: rgba(0,0,0,0.1) dashed;
