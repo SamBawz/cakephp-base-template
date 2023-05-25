@@ -27,6 +27,8 @@ class TableComponent extends LitElement {
 	// Render the UI as a function of component state
 	render() {
 		return html`
+			<link rel="stylsheet" href=".././fa/css/all.css">
+
 			<table>
 				<thead>
 					<tr>

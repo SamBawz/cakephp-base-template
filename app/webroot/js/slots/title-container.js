@@ -11,7 +11,9 @@ class TitleContainer extends LitElement {
 
 	render() {
 		return html`
-			<slot></slot>
+			<div class="py-3">
+				<slot></slot>
+			</div>
 			<p>My title was slotted inside this component and thus retains external styling</p>
 			<p>I'm still blue from my internal styling</p>
 		`;
